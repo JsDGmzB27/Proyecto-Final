@@ -10,12 +10,12 @@ class LoginController(QObject):
         super().__init__()
         self.view = view
 
-        self.view.loginButton.clicked.connect(self.login)
+        self.view.login_button.clicked.connect(self.login)
 
 
     def login(self):
-        username = self.view.usernameInput.text()
-        password = self.view.passwordInput.text()
+        username = self.view.username_input.text()
+        password = self.view.password_input.text()
 
         print(f"Username: {username}, Password: {password}")
 
