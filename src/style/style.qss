@@ -1,5 +1,5 @@
 QLabel {
-    color: #2ecc71;
+    color: #3d3257;
     font-size: 18px;
     font-weight: bold;
 }
