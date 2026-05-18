@@ -1,5 +1,4 @@
-from pymongo import MongoClient
-#guardar las contraseñas encriptadas    
+from pymongo import MongoClient 
 
 client = MongoClient("mongodb+srv://manolo_Buritica:miguelito890@usuarioscasino.rxkscni.mongodb.net/?appName=usuariosCasino")
 
@@ -8,27 +7,34 @@ coleccion = db["usuarios"]
     
 
 #conectar con la interfaz grafica
-def agregar_usuario(usuario, contraseña, correo, presupuesto=0.0):
+def agregar_usuario(usuario, contraseña, correo):
     nuevo = {
         "usuario": usuario,
         "contraseña": contraseña,
         "correo": correo,
-        "presupuesto": presupuesto,
+        "presupuesto": 0.0,
         "dinero_perdido": 0.0,
         "dinero_ganado": 0.0,
     }
-    resultado = coleccion.insert_one(nuevo)
-    #print(f"Usuario creado con ID: {resultado.inserted_id}")
+    try:
+        coleccion.insert_one(nuevo)
+    except Exception as e:
+        raise ValueError("Error al agregar usuario")
+
+def validar_usuario(nombre_usuario, contraseña):
+    usuario = coleccion.find_one({"usuario": nombre_usuario, "contraseña": contraseña})
+    if usuario:
+        return usuario
+    else:
+        raise ValueError("Usuario o contraseña incorrectos")
 
 def buscar_usuario(nombre_usuario):
     usuario = coleccion.find_one({"usuario": nombre_usuario})
     if usuario:
-        print(usuario)
+        return usuario
     else:
-        print("Usuario no encontrado")
-    return usuario  
-    
-# Editar cualquier campo
+        raise ValueError("Usuario no encontrado")
+
 def editar_usuario(nombre_usuario, nuevos_datos: dict): #recibe diccionario de los campos que se quieren editar
     resultado = coleccion.update_one(
         {"usuario": nombre_usuario},
