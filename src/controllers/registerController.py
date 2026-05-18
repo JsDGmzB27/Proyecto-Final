@@ -19,7 +19,7 @@ class RegisterController(QObject):
         password = self.view.password_input.text()
         if email != "" and username != "" and password != "":
             if "@" in email and "." in email:
-                if not buscar_usuario(username):
+                if buscar_usuario(username) == "Usuario no encontrado":
                     try:
                         agregar_usuario(username, password, email)
                         QMessageBox.information(self.view, "Éxito", "Usuario registrado exitosamente.")

@@ -33,8 +33,8 @@ def buscar_usuario(nombre_usuario):
     if usuario:
         return usuario
     else:
-        raise ValueError("Usuario no encontrado")
-
+        return "Usuario no encontrado"
+    
 def editar_usuario(nombre_usuario, nuevos_datos: dict): #recibe diccionario de los campos que se quieren editar
     resultado = coleccion.update_one(
         {"usuario": nombre_usuario},
