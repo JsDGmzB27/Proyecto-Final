@@ -5,7 +5,6 @@ class ProfileController(QObject):
     def __init__(self, view):
         super().__init__()
         self.view = view
-        self.cargar_datos_usuario()
 
     def cargar_datos_usuario(self):
         try:

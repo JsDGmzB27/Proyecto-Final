@@ -1,10 +1,11 @@
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import *
 from config.database import validar_usuario
+import os
 
 
 class LoginController(QObject):
-    
+    os.remove("cache/current_user.txt") if os.path.exists("cache/current_user.txt") else None
     loginSignal = pyqtSignal()
     changeRegisterSignal = pyqtSignal()
 
@@ -22,8 +23,8 @@ class LoginController(QObject):
         try:
             usuario = validar_usuario(username, password)
             if usuario:
-                self.loginSignal.emit()
                 with open("cache/current_user.txt", "w") as f:
                     f.write(f"{usuario["usuario"]}")
+                self.loginSignal.emit()
         except ValueError as e:
             QMessageBox.critical(self.view, "Error", str(e))

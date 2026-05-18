@@ -19,9 +19,12 @@ class MainWindow(QMainWindow):
         self.stack.addWidget(self.lobby_ui)
         self.stack.addWidget(self.register_ui)
 
+        self.profile_controller = ProfileController(self.lobby_ui.profile_page)
+
         self.login_controller = LoginController(self.login_ui)
         self.login_controller.loginSignal.connect(lambda: self.stack.setCurrentWidget(self.lobby_ui))
         self.login_controller.changeRegisterSignal.connect(lambda: self.stack.setCurrentWidget(self.register_ui))
+        self.login_controller.loginSignal.connect(lambda: self.profile_controller.cargar_datos_usuario())
 
         self.register_controller = RegisterController(self.register_ui)
         self.register_controller.changeLoginSignal.connect(lambda: self.stack.setCurrentWidget(self.login_ui))
@@ -30,7 +33,8 @@ class MainWindow(QMainWindow):
         self.settings_controller.logoutSignal.connect(lambda: self.stack.setCurrentWidget(self.login_ui))
         self.setCentralWidget(self.stack)
         
-        self.profile_controller = ProfileController(self.lobby_ui.profile_page)
+        
+
 
 
 if __name__ == "__main__":
